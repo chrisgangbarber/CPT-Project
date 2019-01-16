@@ -8,6 +8,14 @@ randnum = random.randint (50, 281)
 def setup():
     size(640, 480)
 
+# def constrain(x_bird, x_pipe, pipe_width):
+
+#     if x_bird < x_pipe: print x_pipe
+#     if x_bird > x_pipe + pipe_width: print pipe_width
+#     print x_bird
+    
+# constrain (300, 500, 600)
+
 def draw():
     background(211)
     global y_bird
@@ -50,8 +58,9 @@ def draw():
         x_pipe -= 5
     global randnum
     pipe_gap = 150
-    rect (x_pipe, -1, 60, randnum)
-    rect (x_pipe, randnum + pipe_gap, 60, height - randnum - pipe_gap)
+    pipe_width = 60
+    rect (x_pipe, -1, pipe_width, randnum)
+    rect (x_pipe, randnum + pipe_gap, pipe_width, height - randnum - pipe_gap)
     
     if x_pipe <= 540:
         rect (640, -1, 60, randnum)
