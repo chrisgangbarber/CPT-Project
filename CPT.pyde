@@ -2,25 +2,43 @@ key_pressed = [False for key_code in range(256)]
 y_bird = 240
 x_bird = 200
 x_pipe = 640
+pipe_width = 60
+pipe_endpoint = x_pipe + pipe_width
 import random
 randnum = random.randint (50, 281)
 
 def setup():
     size(640, 480)
 
-# def constrain(x_bird, x_pipe, pipe_width):
+# def draw_pipes():
+#     #pipes/jail bars
+#     global x_pipe
+#     global randnum
+#     fill (0, 255, 0)
+#     if x_pipe >= -60:
+#         x_pipe -= 5
+#     pipe_gap = 150
+#     pipe_width = 60
+#     rect (x_pipe, -1, pipe_width, randnum)
+#     rect (x_pipe, randnum + pipe_gap, pipe_width, height - randnum - pipe_gap)
 
-#     if x_bird < x_pipe: print x_pipe
-#     if x_bird > x_pipe + pipe_width: print pipe_width
-#     print x_bird
-    
-# constrain (300, 500, 600)
+# game_on = True
+# if game_on == True:
+#     draw_pipes()
+
+
+def constrain(x_bird, x_pipe, pipe_endpoint):
+    if x_bird < x_pipe: print x_pipe
+    if x_bird > pipe_endpoint: print pipe_endpoint
+    print x_bird
 
 def draw():
     background(211)
     global y_bird
     global x_pipe
+    global pipe_width
     global x_bird
+    global pipe_endpoint
     
     #doors
     noStroke ()
@@ -51,21 +69,18 @@ def draw():
     
     if y_bird != height:
         y_bird += 1
-        
-    #pipes/jail bars
+    
+    #pipes
     fill (0, 255, 0)
     if x_pipe >= -60:
         x_pipe -= 5
-    global randnum
-    pipe_gap = 150
-    pipe_width = 60
+    pipe_gap = 110
+    
     rect (x_pipe, -1, pipe_width, randnum)
     rect (x_pipe, randnum + pipe_gap, pipe_width, height - randnum - pipe_gap)
     
-    if x_pipe <= 540:
-        rect (640, -1, 60, randnum)
-        rect (640, randnum + pipe_gap, 60, height - randnum - pipe_gap)
-    
+    constrain(x_bird, x_pipe, pipe_endpoint)
+        
     #bird movement
     if key_pressed [38]:
         y_bird -= 4
