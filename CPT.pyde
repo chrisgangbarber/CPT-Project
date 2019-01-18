@@ -1,8 +1,8 @@
 key_pressed = [False for key_code in range(256)]
-y_bird = 240
-x_bird = 200
+bird_pos = [200, 240]
 x_pipe = 640
 pipe_width = 60
+diameter = 50
 pipe_endpoint = x_pipe + pipe_width
 import random
 randnum = random.randint (50, 281)
@@ -17,15 +17,17 @@ def setup():
 #     fill (0, 255, 0)
 #     if x_pipe >= -60:
 #         x_pipe -= 5
+
 #     pipe_gap = 150
 #     pipe_width = 60
 #     rect (x_pipe, -1, pipe_width, randnum)
 #     rect (x_pipe, randnum + pipe_gap, pipe_width, height - randnum - pipe_gap)
 
 # game_on = True
-# if game_on == True:
-#     draw_pipes()
-
+# while game_on == True:
+# if bird_pos[0] >= x_pipe - diameter and bird_pos[0] <= x_pipe + pipe_width + diameter and bird_pos[1] <= randnum + diameter or bird_pos[0] >= randnum_pipe_gap + diameter:
+#     game_on == False
+# constrain(x_bird, x_pipe, pipe_endpoint)
 
 def constrain(x_bird, x_pipe, pipe_endpoint):
     if x_bird < x_pipe: print x_pipe
@@ -34,11 +36,11 @@ def constrain(x_bird, x_pipe, pipe_endpoint):
 
 def draw():
     background(211)
-    global y_bird
     global x_pipe
+    global bird_pos
     global pipe_width
-    global x_bird
     global pipe_endpoint
+    global diameter
     
     #doors
     noStroke ()
@@ -65,32 +67,31 @@ def draw():
     #bird jump
     fill (255, 255, 100)
     stroke (0)
-    ellipse (x_bird, y_bird, 50, 50)
+    ellipse (bird_pos[0], bird_pos[1], diameter, diameter)
     
-    if y_bird != height:
-        y_bird += 1
+    if bird_pos[1] != height:
+        bird_pos[1] += 1
     
     #pipes
     fill (0, 255, 0)
     if x_pipe >= -60:
         x_pipe -= 5
+            
     pipe_gap = 110
     
     rect (x_pipe, -1, pipe_width, randnum)
     rect (x_pipe, randnum + pipe_gap, pipe_width, height - randnum - pipe_gap)
     
-    constrain(x_bird, x_pipe, pipe_endpoint)
-        
     #bird movement
-    if key_pressed [38]:
-        y_bird -= 4
-    if key_pressed [40]:
-        y_bird += 4
-    if key_pressed [37]:
-        x_bird -= 4
-    if key_pressed [39]:
-        x_bird += 4
-
+    if key_pressed [38] and bird_pos[1] >= 0:
+        bird_pos[1] -= 4
+    if key_pressed [40] and bird_pos[1] != height:
+        bird_pos[1] += 4
+    if key_pressed [37] and bird_pos[0] >= 0:
+        bird_pos[0] -= 4
+    if key_pressed [39] and bird_pos[0] <= width:
+        bird_pos[0] += 4
+        
 def keyPressed():
     global key_pressed
     key_pressed[keyCode] = True 
@@ -98,7 +99,3 @@ def keyPressed():
 def keyReleased():
     global key_pressed
     key_pressed[keyCode] = False
-        
-
-        
-    
