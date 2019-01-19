@@ -3,25 +3,27 @@ bird_pos = [200, 240]
 x_pipe = 640
 pipe_width = 60
 diameter = 50
+counter = 0
 pipe_endpoint = x_pipe + pipe_width
 import random
-randnum = random.randint (50, 281)
+
 
 def setup():
     size(640, 480)
 
-# def draw_pipes():
-#     #pipes/jail bars
-#     global x_pipe
-#     global randnum
-#     fill (0, 255, 0)
-#     if x_pipe >= -60:
-#         x_pipe -= 5
-
-#     pipe_gap = 150
-#     pipe_width = 60
-#     rect (x_pipe, -1, pipe_width, randnum)
-#     rect (x_pipe, randnum + pipe_gap, pipe_width, height - randnum - pipe_gap)
+def draw_pipes():
+    #pipes/jail bars
+    global x_pipe
+    top_pipe_height = random.randint (50, 281)
+    pipe_gap = 150
+    pipe_width = 60
+    bottom_pipe_height = heihgt - top_pipe_height - pipe_gap
+    bottom_pipe_pipe = pipe_height + pipe_gap
+    fill (0, 255, 0)
+    if x_pipe >= -60:
+        x_pipe -= 5
+    rect (x_pipe, -1, pipe_width, randnum)
+    rect (x_pipe, randnum + pipe_gap, pipe_width, height - randnum - pipe_gap)
 
 # game_on = True
 # while game_on == True:
@@ -41,6 +43,7 @@ def draw():
     global pipe_width
     global pipe_endpoint
     global diameter
+    global counter
     
     #doors
     noStroke ()
@@ -64,25 +67,16 @@ def draw():
     for j in range (40, 640, 80):
         rect (j, 360, 5, 80)
     
-    #bird jump
+    #bird and bird movement
     fill (255, 255, 100)
     stroke (0)
     ellipse (bird_pos[0], bird_pos[1], diameter, diameter)
     
     if bird_pos[1] != height:
         bird_pos[1] += 1
+    elif bird_pos[1] > height:
+        bird_pos[1] = height
     
-    #pipes
-    fill (0, 255, 0)
-    if x_pipe >= -60:
-        x_pipe -= 5
-            
-    pipe_gap = 110
-    
-    rect (x_pipe, -1, pipe_width, randnum)
-    rect (x_pipe, randnum + pipe_gap, pipe_width, height - randnum - pipe_gap)
-    
-    #bird movement
     if key_pressed [38] and bird_pos[1] >= 0:
         bird_pos[1] -= 4
     if key_pressed [40] and bird_pos[1] != height:
@@ -91,6 +85,11 @@ def draw():
         bird_pos[0] -= 4
     if key_pressed [39] and bird_pos[0] <= width:
         bird_pos[0] += 4
+        
+    #pipes 
+    counter += 1
+    if counter % 4 == 0:
+         draw_pipes()
         
 def keyPressed():
     global key_pressed
