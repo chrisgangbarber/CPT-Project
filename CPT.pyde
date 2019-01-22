@@ -1,3 +1,6 @@
+# Sir before you start, you need to add the three png files that are in the master branch to your processing program. 
+# Download the pictures then click on sketch at the top and add the three pictues by clicking add files
+
 import random
 key_pressed = [False for key_code in range(256)]
 player_pos = [200, 240]
